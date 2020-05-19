@@ -8,6 +8,7 @@ const initialState = () => ({
   countryCode: '',
   tenDayForecast: [
     {
+      date: '',
       minTemp: 0,
       maxTemp: 0
     }
@@ -22,23 +23,39 @@ const actions = {
     { dispatch, commit }: any,
     location: { city: string; countryCode: string }
   ) {
-    await dispatch('appState/appIsLoading', null, { root: true })
-    commit('UPDATE_LOCATION', { location })
-    const response = await axios.get(
-      `https://api.weatherbit.io/v2.0/forecast/daily?city=${location.city}&country=${location.countryCode}&key=${key}&days=10`
-    )
-    console.log('data', response.data)
+    try {
+      await dispatch('appState/appIsLoading', null, { root: true })
+      // commit('UPDATE_LOCATION', { location })
+      const response = await axios.get(
+        `https://api.weatherbit.io/v2.0/forecast/daily?city=${location.city}&country=${location.countryCode}&key=${key}&days=10`
+      )
+      const tenDayForecast = response.data.data.map((day: any) => {
+        return {
+          date: day.valid_date,
+          minTemp: day.min_temp,
+          maxTemp: day.max_temp
+        }
+      })
+      commit('UPDATE_LOCATION_WEATHER', {
+        city: location.city,
+        countryCode: location.countryCode,
+        tenDayForecast
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
     await dispatch('appState/appIsDoneLoading', null, { root: true })
   }
 }
 
 const mutations = {
-  UPDATE_LOCATION(
+  UPDATE_LOCATION_WEATHER(
     state: LocationWeatherModel,
-    payload: { city: string; countryCode: string }
+    payload: LocationWeatherModel
   ) {
     state.city = payload.city
     state.countryCode = payload.countryCode
+    state.tenDayForecast = payload.tenDayForecast
   }
 }
 
