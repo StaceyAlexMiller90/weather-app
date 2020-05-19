@@ -1,13 +1,18 @@
 <template>
   <div class="bg">
-    <h1></h1>
+    <InputForm />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import InputForm from './InputForm.vue'
 
-@Component
+@Component({
+  components: {
+    InputForm
+  }
+})
 export default class Weather extends Vue {
   get loading() {
     return this.$store.state.appState.appLoading
@@ -18,6 +23,7 @@ export default class Weather extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bg {
+  /* bg */
   position: absolute;
   width: 1440px;
   height: 839px;
