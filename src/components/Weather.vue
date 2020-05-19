@@ -7,17 +7,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import FormContainer from './FormContainer.vue'
+import { mapState } from 'vuex'
 
 @Component({
+  computed: mapState('appState', ['appLoading']),
   components: {
     FormContainer
   }
 })
-export default class Weather extends Vue {
-  get loading() {
-    return this.$store.state.appState.appLoading
-  }
-}
+export default class Weather extends Vue {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

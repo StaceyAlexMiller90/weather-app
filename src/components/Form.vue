@@ -13,7 +13,7 @@
       class="text-input"
       required
     />
-    <img src="../assets/search.png" class="search" v-on:click="getWeather" />
+    <img src="../assets/search.png" class="search" v-on:click="fetchWeather" />
   </form>
 </template>
 
@@ -32,7 +32,7 @@ export default class Form extends Vue {
   countryCode = ''
   city = ''
 
-  getWeather() {
+  fetchWeather() {
     this.$store.dispatch('locationWeather/getLocationWeather', {
       city: this.city,
       countryCode: this.countryCode

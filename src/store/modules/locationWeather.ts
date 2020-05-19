@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LocationWeatherModel } from '../models'
+import { LocationWeatherModel, LoadingModel } from '../models'
 
 const key = process.env.VUE_APP_APIKEY
 
@@ -10,12 +10,24 @@ const initialState = () => ({
     {
       date: '',
       minTemp: 0,
-      maxTemp: 0
+      maxTemp: 0,
+      average: 0
     }
   ]
 })
 
 const state: LocationWeatherModel = initialState()
+
+// getters
+const getters = {
+  averageTempTenDays: (state: LocationWeatherModel) => {
+    return (
+      state.tenDayForecast
+        .map(day => day.average)
+        .reduce((prev, curr) => (curr += prev)) / 10
+    )
+  }
+}
 
 // actions
 const actions = {
@@ -33,7 +45,8 @@ const actions = {
         return {
           date: day.valid_date,
           minTemp: day.min_temp,
-          maxTemp: day.max_temp
+          maxTemp: day.max_temp,
+          average: (day.min_temp + day.max_temp / 2).toFixed(1)
         }
       })
       commit('UPDATE_LOCATION_WEATHER', {
@@ -62,6 +75,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations
 }
