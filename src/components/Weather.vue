@@ -1,16 +1,16 @@
 <template>
   <div class="bg">
-    <InputForm />
+    <FormContainer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import InputForm from './InputForm.vue'
+import FormContainer from './FormContainer.vue'
 
 @Component({
   components: {
-    InputForm
+    FormContainer
   }
 })
 export default class Weather extends Vue {

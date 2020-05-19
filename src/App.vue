@@ -7,9 +7,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Weather from '../src/components/Weather.vue'
-import * as VueCountryCode from 'vue-country-code'
+// import * as VueCountryCode from 'vue-country-code'
 
-Vue.use(VueCountryCode)
+// Vue.use(VueCountryCode)
 
 @Component({
   components: {

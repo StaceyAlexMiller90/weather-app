@@ -1,29 +1,25 @@
 <template>
   <form>
     <div id="country-select">
-      <select v-model="selected" class="country-dropdown">
+      <select v-model="countryCode" class="country-dropdown">
         <option
           v-for="country in countries"
           v-bind:value="country"
           :key="country"
         >
-          <!-- <country-flag
-          v-bind:country="{ country }"
-          size="normal"
-          rounded="true"
-        /> -->
           {{ country }}</option
         >
       </select>
     </div>
     <div class="text-input-container"></div>
     <input
+      v-model="city"
       type="text"
       placeholder="Please enter your location..."
       class="text-input"
       required
     />
-    <img src="../assets/search.png" class="search" />
+    <img src="../assets/search.png" class="search" v-on:click="getWeather" />
   </form>
 </template>
 
@@ -38,8 +34,15 @@ import { countries } from '../utils'
   }
 })
 export default class Form extends Vue {
-  data: {
-    selected: ''
+  countries: string[] = countries
+  countryCode = ''
+  city = ''
+
+  getWeather() {
+    this.$store.dispatch('location/getLocationWeather', {
+      city: this.city,
+      countryCode: this.countryCode
+    })
   }
 }
 </script>
@@ -56,15 +59,6 @@ export default class Form extends Vue {
   background: #ffffff;
   border: 1px solid rgba(8, 21, 62, 0.05);
   border-radius: 6px;
-}
-
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-select::after {
-  background: url('../assets/down.png') 96% / 15% no-repeat;
 }
 
 .text-input {

@@ -1,4 +1,5 @@
 import { LocationModel } from '../models'
+import appState from '../modules/appState'
 
 const initialState = () => ({
   city: '',
@@ -7,16 +8,25 @@ const initialState = () => ({
 
 const state: LocationModel = initialState()
 
-// export default {
-//   UPDATE_LOCATION: (
-//     state: { appLoading: LoadingModel; location: LocationModel },
-//     payload: LocationModel
-//   ) => {
-//     state.location = payload
-//   },
-// }
+// actions
+const actions = {
+  getLocationWeather({ dispatch, commit }: any, location: LocationModel) {
+    dispatch('appState/appIsLoading')
+    commit('UPDATE_LOCATION', location)
+    dispatch('appState/appIsDoneLoading')
+  }
+}
+
+const mutations = {
+  UPDATE_LOCATION(state: LocationModel, payload: LocationModel) {
+    state.city = payload.city
+    state.countryCode = payload.countryCode
+  }
+}
 
 export default {
   namespaced: true,
-  state
+  state,
+  actions,
+  mutations
 }
