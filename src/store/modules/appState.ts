@@ -20,7 +20,7 @@ const actions = {
   },
 
   appIsDoneLoading({ commit }: any) {
-    commit('ADD_DONE_LOADING')
+    commit('APP_DONE_LOADING')
   }
 }
 

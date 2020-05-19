@@ -2,13 +2,7 @@
   <form>
     <div id="country-select">
       <select v-model="countryCode" class="country-dropdown">
-        <option
-          v-for="country in countries"
-          v-bind:value="country"
-          :key="country"
-        >
-          {{ country }}</option
-        >
+        <option v-for="country in countries" v-bind:value="country" :key="country">{{ country }}</option>
       </select>
     </div>
     <div class="text-input-container"></div>
@@ -39,7 +33,7 @@ export default class Form extends Vue {
   city = ''
 
   getWeather() {
-    this.$store.dispatch('location/getLocationWeather', {
+    this.$store.dispatch('locationWeather/getLocationWeather', {
       city: this.city,
       countryCode: this.countryCode
     })

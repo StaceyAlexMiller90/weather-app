@@ -2,7 +2,11 @@ export interface LoadingModel {
   appLoading: boolean
 }
 
-export interface LocationModel {
+export interface LocationWeatherModel {
   city: string
   countryCode: string
+  tenDayForecast: {
+    minTemp: number
+    maxTemp: number
+  }[]
 }

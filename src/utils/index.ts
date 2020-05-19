@@ -1,1 +1,1 @@
-export const countries = ['AF', 'AX', 'AL']
+export const countries = ['AF', 'AX', 'AL', 'GB']
