@@ -21,7 +21,7 @@ const state: LocationWeatherModel = initialState()
 // getters
 const getters = {
   averageTempTenDays: (state: LocationWeatherModel) => {
-    return (
+    return Math.round(
       state.tenDayForecast
         .map(day => day.average)
         .reduce((prev, curr) => (curr += prev)) / 10
@@ -46,7 +46,7 @@ const actions = {
           date: day.valid_date,
           minTemp: day.min_temp,
           maxTemp: day.max_temp,
-          average: parseFloat((day.min_temp + day.max_temp / 2).toFixed(1))
+          average: Math.round(day.min_temp + day.max_temp / 2)
         }
       })
       commit('UPDATE_LOCATION_WEATHER', {

@@ -1,18 +1,23 @@
 <template>
-  <div class="bg">
-    <FormContainer />
+  <div class="bg" v-bind:class="{'colForCity': city, 'defaultCol': !city}">
+    <Form class="rectangle2-14" v-bind:class="{'emptyPage': !city, 'resultsPage': city}" />
+    <img v-if="appLoading" class="loading" src="../assets/Loading.png" />
+    <Results />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import FormContainer from './FormContainer.vue'
+import Form from './Form.vue'
 import { mapState } from 'vuex'
 
 @Component({
-  computed: mapState('appState', ['appLoading']),
+  computed: {
+    ...mapState('appState', ['appLoading']),
+    ...mapState('locationWeather', ['city', 'countryCode', 'tenDayForecast'])
+  },
   components: {
-    FormContainer
+    Form
   }
 })
 export default class Weather extends Vue {}
@@ -20,14 +25,36 @@ export default class Weather extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.bg {
-  /* bg */
+.emptyPage {
   position: absolute;
-  width: 1440px;
-  height: 839px;
-  left: 0px;
-  top: 1px;
+  width: 632px;
+  height: 92px;
+  left: 404px;
+  top: 374px;
+}
 
+.resultsPage {
+  position: absolute;
+  width: 632px;
+  height: 92px;
+  left: 404px;
+  top: 194px;
+}
+.rectangle2-14 {
+  /* Rectangle 2.14 */
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    #f8f8f8;
+  box-shadow: 0px 2px 10px rgba(8, 21, 62, 0.15);
+  border-radius: 16px;
+}
+.colForCity {
+  background: black;
+}
+.defaultCol {
   background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.8),
@@ -45,5 +72,45 @@ export default class Weather extends Vue {}
       #ffc178 96.44%,
       #fe9255 111.85%
     );
+}
+.bg {
+  /* bg */
+  position: absolute;
+  width: 1440px;
+  height: 839px;
+  left: 0px;
+  top: 1px;
+}
+
+.loading {
+  position: absolute;
+  top: 334px;
+  left: 668px;
+  animation: 2s linear infinite spin;
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
