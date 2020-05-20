@@ -6,13 +6,6 @@ const initialState = () => ({
 
 const state: LoadingModel = initialState()
 
-// getters
-const getters = {
-  appLoading: (state: LoadingModel) => {
-    return state.appLoading
-  }
-}
-
 // actions
 const actions = {
   appIsLoading({ commit }: any) {
@@ -20,7 +13,7 @@ const actions = {
   },
 
   appIsDoneLoading({ commit }: any) {
-    commit('ADD_DONE_LOADING')
+    commit('APP_DONE_LOADING')
   }
 }
 
@@ -38,7 +31,6 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getters,
   actions,
   mutations
 }
