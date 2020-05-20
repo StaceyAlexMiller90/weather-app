@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LocationWeatherModel, LoadingModel } from '../models'
+import { LocationWeatherModel, Colours } from '../models'
 
 const key = process.env.VUE_APP_APIKEY
 
@@ -26,6 +26,43 @@ const getters = {
         .map(day => day.average)
         .reduce((prev, curr) => (curr += prev)) / 10
     )
+  },
+  averageLowestTempTenDays: (state: LocationWeatherModel) => {
+    return Math.round(
+      state.tenDayForecast
+        .map(day => day.minTemp)
+        .reduce((prev, curr) => (curr += prev)) / 10
+    )
+  },
+  averageHighestTempTenDays: (state: LocationWeatherModel) => {
+    return Math.round(
+      state.tenDayForecast
+        .map(day => day.maxTemp)
+        .reduce((prev, curr) => (curr += prev)) / 10
+    )
+  },
+  colForLocation: (state: LocationWeatherModel, getters: any) => {
+    const cols: Colours = {
+      '-40': '#102F7E',
+      '-30': '#0C8DD6',
+      '-20': '#1AA0EC',
+      '-10': '#60C6FF',
+      '0': '#9bdbff',
+      '10': '#b4deda',
+      '20': '#ffd66b',
+      '30': '#ffc178',
+      '40': '#fe9255'
+    }
+    const avNearestTen: keyof Colours = (
+      Math.round(getters.averageTempTenDays / 10) * 10
+    ).toString()
+    const avLowestTen: keyof Colours = (
+      Math.round(getters.averageLowestTempTenDays / 10) * 10
+    ).toString()
+    const avHighesttTen: keyof Colours = (
+      Math.round(getters.averageHighestTempTenDays / 10) * 10
+    ).toString()
+    return `linear-gradient(145.74deg,${cols[avLowestTen]} -33.02%,${cols[avNearestTen]} 52.01%,${cols[avHighesttTen]} 137.04%)`
   }
 }
 
