@@ -1,11 +1,14 @@
 <template>
   <div
     class="bg"
-    v-bind:class="{'defaultCol': !city}"
-    v-bind:style="{background: city && colForLocation }"
+    v-bind:class="{ defaultCol: !city }"
+    v-bind:style="{ background: city && colForLocation }"
   >
-    <Form class="rectangle2-14" v-bind:class="{'emptyPage': !city, 'resultsPage': city}" />
-    <Results />
+    <Form
+      class="rectangle2-14"
+      v-bind:class="{ emptyPage: !city, resultsPage: city }"
+    />
+    <Results class="results" v-if="city" />
   </div>
 </template>
 
@@ -84,5 +87,15 @@ export default class Weather extends Vue {}
   height: 839px;
   left: 0px;
   top: 1px;
+}
+
+.results {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 171px;
+  display: flex;
+  justify-content: center;
+  top: 334px;
 }
 </style>

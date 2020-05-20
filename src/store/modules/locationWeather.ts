@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { LocationWeatherModel, Colours } from '../models'
+import moment from 'moment'
 
 const key = process.env.VUE_APP_APIKEY
 
@@ -26,6 +27,9 @@ const getters = {
         .map(day => day.average)
         .reduce((prev, curr) => (curr += prev)) / 10
     )
+  },
+  sevenDayForecast: (state: LocationWeatherModel) => {
+    return state.tenDayForecast.slice(0, 7)
   },
   averageLowestTempTenDays: (state: LocationWeatherModel) => {
     return Math.round(
@@ -56,13 +60,43 @@ const getters = {
     const avNearestTen: keyof Colours = (
       Math.round(getters.averageTempTenDays / 10) * 10
     ).toString()
-    const avLowestTen: keyof Colours = (
-      Math.round(getters.averageLowestTempTenDays / 10) * 10
-    ).toString()
-    const avHighesttTen: keyof Colours = (
-      Math.round(getters.averageHighestTempTenDays / 10) * 10
-    ).toString()
-    return `linear-gradient(145.74deg,${cols[avLowestTen]} -33.02%,${cols[avNearestTen]} 52.01%,${cols[avHighesttTen]} 137.04%)`
+    // Added code for average lowest and av highest to display a fully dynamic gradient,
+    //I noticed that just the endpoint does not demonstrate a huge difference when tested
+    // const avLowestTen: keyof Colours = (
+    //   Math.round(getters.averageLowestTempTenDays / 10) * 10
+    // ).toString()
+    // const avHighestTen: keyof Colours = (
+    //   Math.round(getters.averageHighestTempTenDays / 10) * 10
+    // ).toString()
+    return `linear-gradient(145.74deg,#9BDBFF -33.02%,#B4DEDA 52.01%,${cols[avNearestTen]} 137.04%)`
+  },
+  getDateRange: (state: LocationWeatherModel, getters: any) => {
+    try {
+      const monthCheck = getters.sevenDayForecast.map(
+        (day: { date: string }) => {
+          return moment(day.date).format('MMM')
+        }
+      )
+      const yearCheck = getters.sevenDayForecast.map(
+        (day: { date: string }) => {
+          return moment(day.date).format('YYYY')
+        }
+      )
+      const month =
+        monthCheck[0] === monthCheck[6]
+          ? monthCheck[0]
+          : `${monthCheck[0]} - ${monthCheck[6]}`
+      const date = `${moment(getters.sevenDayForecast[0].date).format(
+        'D'
+      )} - ${moment(getters.sevenDayForecast[6].date).format('D')}`
+      const year =
+        yearCheck[0] === yearCheck[6]
+          ? yearCheck[0]
+          : `${yearCheck[0]} - ${yearCheck[6]}`
+      return `${month} ${date} ${year}`
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 }
 
@@ -81,9 +115,9 @@ const actions = {
       const tenDayForecast = response.data.data.map((day: any) => {
         return {
           date: day.valid_date,
-          minTemp: day.min_temp,
-          maxTemp: day.max_temp,
-          average: Math.round(day.min_temp + day.max_temp / 2)
+          minTemp: Math.round(day.min_temp),
+          maxTemp: Math.round(day.max_temp),
+          average: Math.round((day.min_temp + day.max_temp) / 2)
         }
       })
       commit('UPDATE_LOCATION_WEATHER', {
