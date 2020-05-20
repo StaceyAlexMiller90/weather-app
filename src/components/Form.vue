@@ -3,7 +3,7 @@
     <img src="../assets/cloud.png" class="cloud" />
     <select v-model="countryCode" class="country-dropdown">
       <option v-for="country in countries" v-bind:value="country" :key="country">
-        <flag :iso="country" />
+        <!-- <flag :iso="country" /> -->
         <span>{{ country }}</span>
       </option>
     </select>
@@ -15,7 +15,13 @@
         class="text-input"
         required
       />
-      <img src="../assets/search.png" class="search" v-on:click="fetchWeather" />
+      <img
+        v-if="!appLoading"
+        src="../assets/search.png"
+        class="icon search"
+        v-on:click="fetchWeather"
+      />
+      <img v-if="appLoading" class="icon loading" src="../assets/Loading.png" />
     </div>
   </form>
 </template>
@@ -24,10 +30,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { countries, isoCountries } from '../utils'
 import FlagIcon from 'vue-flag-icon'
+import { mapState } from 'vuex'
 
 Vue.use(FlagIcon)
 
 @Component({
+  computed: {
+    ...mapState('appState', ['appLoading'])
+  },
   components: FlagIcon
 })
 export default class Form extends Vue {
@@ -46,23 +56,6 @@ export default class Form extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.emptyPage {
-  /* Rectangle 2.14 */
-  position: absolute;
-  width: 632px;
-  height: 92px;
-  left: 404px;
-  top: 374px;
-
-  background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.9)
-    ),
-    #f8f8f8;
-  box-shadow: 0px 2px 10px rgba(8, 21, 62, 0.15);
-  border-radius: 16px;
-}
 .cloud {
   /* cloud */
   position: absolute;
@@ -119,14 +112,42 @@ export default class Form extends Vue {
   border: 1px solid rgba(8, 21, 62, 0.05);
   border-radius: 6px;
 }
-
-.search {
+.icon {
   position: absolute;
   width: 24px;
   height: 24px;
   left: 389px;
   top: 12px;
-
+}
+.search {
   opacity: 0.5;
+}
+.loading {
+  animation: 2s linear infinite spin;
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

@@ -4,8 +4,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { mapState, mapGetters } from 'vuex'
 
-@Component
+@Component({
+  computed: {
+    ...mapState('locationWeather', ['tenDayForecast']),
+    ...mapGetters('locationWeather', ['averageTempTenDays'])
+  }
+})
 export default class Results extends Vue {}
 </script>
 
