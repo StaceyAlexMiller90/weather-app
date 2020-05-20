@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Form from './Form.vue'
+import Results from './Results.vue'
 import { mapState } from 'vuex'
 
 @Component({
@@ -17,7 +18,8 @@ import { mapState } from 'vuex'
     ...mapState('locationWeather', ['city', 'countryCode', 'tenDayForecast'])
   },
   components: {
-    Form
+    Form,
+    Results
   }
 })
 export default class Weather extends Vue {}
