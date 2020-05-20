@@ -15,7 +15,7 @@ import Form from './Form.vue'
     Form
   }
 })
-export default class InputForm extends Vue {}
+export default class FormContainer extends Vue {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

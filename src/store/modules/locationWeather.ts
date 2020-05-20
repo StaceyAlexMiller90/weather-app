@@ -46,7 +46,7 @@ const actions = {
           date: day.valid_date,
           minTemp: day.min_temp,
           maxTemp: day.max_temp,
-          average: (day.min_temp + day.max_temp / 2).toFixed(1)
+          average: parseFloat((day.min_temp + day.max_temp / 2).toFixed(1))
         }
       })
       commit('UPDATE_LOCATION_WEATHER', {
