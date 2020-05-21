@@ -23,6 +23,7 @@
         v-if="!appLoading"
         src="../assets/search.png"
         class="icon search"
+        v-bind:style="{ opacity: this.city && 1 }"
         v-on:click="fetchWeather"
       />
       <img v-if="appLoading" class="icon loading" src="../assets/Loading.png" />
@@ -96,12 +97,10 @@ export default class Form extends Vue {
   border: none;
 
   color: #08153e;
-
-  opacity: 0.5;
 }
 
-.text-input-container:focus-within {
-  border: 2px solid #b5c7ff;
+.text-input::placeholder {
+  opacity: 0.5;
 }
 
 .text-input-container {
@@ -116,6 +115,27 @@ export default class Form extends Vue {
   border: 1px solid rgba(8, 21, 62, 0.05);
   border-radius: 6px;
 }
+
+.text-input-container:not(::placeholder):hover .text-input {
+  opacity: 0.5;
+}
+
+.text-input-container:hover {
+  border: 1px solid #b5c7ff;
+}
+
+.text-input-container:focus-within {
+  border: 2px solid #b5c7ff;
+}
+
+.text-input-container:focus-within .search {
+  opacity: 1;
+}
+
+.text-input-container:focus {
+  border: 2px solid #b5c7ff;
+}
+
 .icon {
   position: absolute;
   width: 24px;
