@@ -71,7 +71,7 @@ const getters = {
     return `linear-gradient(145.74deg,#9BDBFF -33.02%,#B4DEDA 52.01%,${cols[avNearestTen]} 137.04%)`
   },
   getDateRange: (state: LocationWeatherModel, getters: any) => {
-    try {
+    if (state.city) {
       const monthCheck = getters.sevenDayForecast.map(
         (day: { date: string }) => {
           return moment(day.date).format('MMM')
@@ -94,8 +94,6 @@ const getters = {
           ? yearCheck[0]
           : `${yearCheck[0]} - ${yearCheck[6]}`
       return `${month} ${date} ${year}`
-    } catch (e) {
-      console.log(e.message)
     }
   }
 }
