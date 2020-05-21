@@ -5,10 +5,10 @@
     v-bind:style="{ background: city && colForLocation }"
   >
     <Form
-      class="rectangle2-14"
-      v-bind:class="{ emptyPage: !city, resultsPage: city }"
+      class="searchBar"
+      v-bind:class="{ emptyPageSearch: !city, resultsPageSearch: city }"
     />
-    <Results class="results" v-if="city" />
+    <Results class="results-container" v-if="city" />
   </div>
 </template>
 
@@ -34,21 +34,24 @@ export default class Weather extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.emptyPage {
+.bg {
+  /* bg */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.searchBar {
+  /* Rectangle 2.14 */
+  position: absolute;
   margin: auto;
-  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-}
-
-.resultsPage {
-  left: 404px;
-  top: 194px;
-}
-.rectangle2-14 {
-  /* Rectangle 2.14 */
-  position: absolute;
   width: 632px;
   height: 92px;
   background: linear-gradient(
@@ -59,6 +62,15 @@ export default class Weather extends Vue {}
     #f8f8f8;
   box-shadow: 0px 2px 10px rgba(8, 21, 62, 0.15);
   border-radius: 16px;
+}
+
+.emptyPageSearch {
+  top: 0;
+}
+
+.resultsPageSearch {
+  position: relative;
+  top: 23.13%;
 }
 
 .defaultCol {
@@ -80,24 +92,15 @@ export default class Weather extends Vue {}
       #fe9255 111.85%
     );
 }
-.bg {
-  /* bg */
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-}
 
-.results {
+.results-container {
   position: absolute;
-  overflow: hidden;
+  top: 39.8%;
+  bottom: 0;
+  margin: auto;
   width: 100%;
-  height: 171px;
   display: flex;
-  justify-content: center;
-  top: 334px;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
