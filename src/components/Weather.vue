@@ -35,22 +35,22 @@ export default class Weather extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .emptyPage {
-  position: absolute;
-  width: 632px;
-  height: 92px;
-  left: 404px;
-  top: 374px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .resultsPage {
-  position: absolute;
-  width: 632px;
-  height: 92px;
   left: 404px;
   top: 194px;
 }
 .rectangle2-14 {
   /* Rectangle 2.14 */
+  position: absolute;
+  width: 632px;
+  height: 92px;
   background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.9),
@@ -83,10 +83,12 @@ export default class Weather extends Vue {}
 .bg {
   /* bg */
   position: absolute;
-  width: 1440px;
-  height: 839px;
+  width: 100%;
+  height: 100%;
   left: 0px;
-  top: 1px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
 }
 
 .results {

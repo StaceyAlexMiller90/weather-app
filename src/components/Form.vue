@@ -2,7 +2,11 @@
   <form>
     <img src="../assets/cloud.png" class="cloud" />
     <select v-model="countryCode" class="country-dropdown">
-      <option v-for="country in countries" v-bind:value="country" :key="country">
+      <option
+        v-for="country in countries"
+        v-bind:value="country"
+        :key="country"
+      >
         <!-- <flag :iso="country" /> -->
         <span>{{ country }}</span>
       </option>
