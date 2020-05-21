@@ -1,18 +1,32 @@
 <template>
-  <div class="bg">
-    <FormContainer />
+  <div
+    class="bg"
+    v-bind:class="{ defaultCol: !city }"
+    v-bind:style="{ background: city && colForLocation }"
+  >
+    <Form
+      class="rectangle2-14"
+      v-bind:class="{ emptyPage: !city, resultsPage: city }"
+    />
+    <Results class="results" v-if="city" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import FormContainer from './FormContainer.vue'
-import { mapState } from 'vuex'
+import Form from './Form.vue'
+import Results from './Results.vue'
+import { mapState, mapGetters } from 'vuex'
 
 @Component({
-  computed: mapState('appState', ['appLoading']),
+  computed: {
+    ...mapState('appState', ['appLoading']),
+    ...mapState('locationWeather', ['city', 'countryCode', 'tenDayForecast']),
+    ...mapGetters('locationWeather', ['averageTempTenDays', 'colForLocation'])
+  },
   components: {
-    FormContainer
+    Form,
+    Results
   }
 })
 export default class Weather extends Vue {}
@@ -20,14 +34,34 @@ export default class Weather extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.bg {
-  /* bg */
+.emptyPage {
   position: absolute;
-  width: 1440px;
-  height: 839px;
-  left: 0px;
-  top: 1px;
+  width: 632px;
+  height: 92px;
+  left: 404px;
+  top: 374px;
+}
 
+.resultsPage {
+  position: absolute;
+  width: 632px;
+  height: 92px;
+  left: 404px;
+  top: 194px;
+}
+.rectangle2-14 {
+  /* Rectangle 2.14 */
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    #f8f8f8;
+  box-shadow: 0px 2px 10px rgba(8, 21, 62, 0.15);
+  border-radius: 16px;
+}
+
+.defaultCol {
   background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.8),
@@ -45,5 +79,23 @@ export default class Weather extends Vue {}
       #ffc178 96.44%,
       #fe9255 111.85%
     );
+}
+.bg {
+  /* bg */
+  position: absolute;
+  width: 1440px;
+  height: 839px;
+  left: 0px;
+  top: 1px;
+}
+
+.results {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 171px;
+  display: flex;
+  justify-content: center;
+  top: 334px;
 }
 </style>

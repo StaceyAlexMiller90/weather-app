@@ -12,3 +12,7 @@ export interface LocationWeatherModel {
     average: number
   }[]
 }
+
+export interface Colours {
+  [key: string]: string
+}
