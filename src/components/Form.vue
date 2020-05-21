@@ -86,7 +86,7 @@ export default class Form extends Vue {
   height: 30px;
   left: 17px;
   top: 9px;
-
+  outline: none;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
