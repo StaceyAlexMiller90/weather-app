@@ -40,7 +40,7 @@
         src="../assets/search.png"
         class="icon search"
         v-bind:style="{ opacity: this.city && 1 }"
-        v-on:click="fetchWeather"
+        v-on:click="search"
       />
       <img v-if="appLoading" class="icon loading" src="../assets/Loading.png" />
     </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { mapState, mapGetters } from 'vuex'
 import { CoolSelect } from 'vue-cool-select'
 import 'vue-cool-select/dist/themes/bootstrap.css'
@@ -68,6 +68,17 @@ import 'vue-cool-select/dist/themes/bootstrap.css'
 export default class Form extends Vue {
   countryCode = 'NL'
   city = ''
+  intervalId = 0
+
+  @Watch('city') resetInterval() {
+    clearInterval(this.intervalId)
+  }
+
+  search() {
+    clearInterval(this.intervalId)
+    this.fetchWeather()
+    this.intervalId = setInterval(this.fetchWeather, 2000)
+  }
 
   fetchWeather() {
     this.$store.dispatch('locationWeather/getLocationWeather', {
