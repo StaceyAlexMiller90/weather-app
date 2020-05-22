@@ -4,7 +4,7 @@
     v-bind:class="{ defaultCol: !city }"
     v-bind:style="{ background: city && colForLocation }"
   >
-    <p v-if="appStatus === 'error'" class="error-message">No data found, please check inputs</p>
+    <p v-if="appStatus === 'error'" class="error-message">No data found, please check city</p>
     <Form class="searchBar" v-bind:class="{ emptyPageSearch: !city, resultsPageSearch: city }" />
     <Results class="results-container" v-if="city" />
   </div>
