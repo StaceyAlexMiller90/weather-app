@@ -117,7 +117,7 @@ export default class Form extends Vue {
 
 .selection {
   width: 17px;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -152,7 +152,7 @@ export default class Form extends Vue {
   left: 17px;
   top: 9px;
   outline: none;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

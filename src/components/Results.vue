@@ -2,19 +2,21 @@
   <div>
     <p class="poppins header-font">{{ getDateRange.toUpperCase() }}</p>
     <p class="poppins average-temp-ten white">
-      {{ averageTempTenDays }}<span class="average-temp-degrees white">°C</span>
+      {{ averageTempTenDays }}
+      <span class="average-temp-degrees white">°C</span>
     </p>
     <div class="poppins weekdays">
       <div v-for="day in sevenDayForecast" :key="day.date">
         <p class="header-font">
           {{
-            Moment(day.date)
-              .format('dddd')
-              .toUpperCase()
+          Moment(day.date)
+          .format('dddd')
+          .toUpperCase()
           }}
         </p>
         <p class="weekday-temp white">
-          {{ day.average }}<span class="weekday-degrees white">°C</span>
+          {{ day.average }}
+          <span class="weekday-degrees white">°C</span>
         </p>
       </div>
     </div>
@@ -46,7 +48,7 @@ export default class Results extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .poppins {
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
 }

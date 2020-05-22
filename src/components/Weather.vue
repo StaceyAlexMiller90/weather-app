@@ -39,7 +39,7 @@ export default class Weather extends Vue {}
   width: 100%;
   top: 10%;
   margin: auto;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   color: gray;
