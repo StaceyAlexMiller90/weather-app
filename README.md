@@ -2,7 +2,7 @@
 
 ## App Demo
 
-[Live version](https://recordnise.netlify.app/)
+[Live version](https://weather-app-stacey.netlify.app/)
 
 ![](/src/assets/weather-app.gif)
 
