@@ -16,4 +16,8 @@ import Weather from '../src/components/Weather.vue'
 export default class App extends Vue {}
 </script>
 
-<style></style>
+<style>
+html {
+  font-family: Poppins;
+}
+</style>
