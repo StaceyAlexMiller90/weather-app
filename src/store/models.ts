@@ -16,3 +16,9 @@ export interface LocationWeatherModel {
 export interface Colours {
   [key: string]: string
 }
+
+export interface Country {
+  name: string
+  code: string
+  flag: string
+}
