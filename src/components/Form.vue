@@ -19,11 +19,7 @@
         </div>
       </template>
       <!-- slot for the selected item (in the text field) -->
-      <template
-        class="select-box"
-        slot="selection"
-        slot-scope="{ item: country }"
-      >
+      <template class="select-box" slot="selection" slot-scope="{ item: country }">
         <img :src="country.flag" class="country-flag" />
         <div>
           <b class="selection">{{ country.code }}</b>

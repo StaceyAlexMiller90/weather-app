@@ -1,5 +1,6 @@
-export interface LoadingModel {
+export interface appModel {
   appLoading: boolean
+  appStatus: string
 }
 
 export interface LocationWeatherModel {
