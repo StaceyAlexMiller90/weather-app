@@ -33,9 +33,12 @@ export default class Weather extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .error-message {
+  position: absolute;
   display: flex;
   justify-content: center;
-  top: 20%;
+  width: 100%;
+  top: 10%;
+  margin: auto;
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;

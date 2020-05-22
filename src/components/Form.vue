@@ -77,7 +77,7 @@ export default class Form extends Vue {
   search() {
     clearInterval(this.intervalId)
     this.fetchWeather()
-    this.intervalId = setInterval(this.fetchWeather, 2000)
+    this.intervalId = setInterval(this.fetchWeather, 1000 * 60 * 60)
   }
 
   fetchWeather() {
