@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { CoolSelect } from 'vue-cool-select'
 import 'vue-cool-select/dist/themes/bootstrap.css'
 
