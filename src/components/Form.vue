@@ -1,16 +1,32 @@
 <template>
   <form>
     <img src="../assets/cloud.png" class="cloud" />
-    <select v-model="countryCode" class="country-dropdown">
-      <option
-        v-for="country in countries"
-        v-bind:value="country"
-        :key="country"
-      >
-        <!-- <flag :iso="country" /> -->
-        <span>{{ country }}</span>
-      </option>
-    </select>
+    <cool-select
+      v-if="!appLoading"
+      v-model="countryCode"
+      :items="countries.countries"
+      item-value="code"
+      item-text="code"
+      class="select"
+    >
+      <!-- slot for each item in the menu -->
+      <template slot="item" slot-scope="{ item: country }">
+        <div style="display: flex; align-items: center;">
+          <img :src="country.flag" class="country-flag" />
+          <div>
+            <b class="selection">{{ country.code }}</b>
+          </div>
+        </div>
+      </template>
+      <!-- slot for the selected item (in the text field) -->
+      <template class="select-box" slot="selection" slot-scope="{ item: country }">
+        <img :src="country.flag" class="country-flag" />
+        <div>
+          <b class="selection">{{ country.code }}</b>
+          <img src="../assets/down.png" class="down" />
+        </div>
+      </template>
+    </cool-select>
     <div class="text-input-container">
       <input
         v-model="city"
@@ -33,21 +49,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { countries, isoCountries } from '../utils'
-import FlagIcon from 'vue-flag-icon'
-import { mapState } from 'vuex'
-
-Vue.use(FlagIcon)
+import { mapState, mapGetters } from 'vuex'
+import { CoolSelect } from 'vue-cool-select'
+import 'vue-cool-select/dist/themes/bootstrap.css'
 
 @Component({
-  computed: {
-    ...mapState('appState', ['appLoading'])
+  created() {
+    this.$store.dispatch('countries/fetchCountries')
   },
-  components: FlagIcon
+  computed: {
+    ...mapState('appState', ['appLoading']),
+    ...mapState(['countries'])
+  },
+  components: {
+    CoolSelect
+  }
 })
 export default class Form extends Vue {
-  countries: string[] = countries
-  countryCode = ''
+  countryCode = 'NL'
   city = ''
 
   fetchWeather() {
@@ -61,6 +80,41 @@ export default class Form extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.select {
+  position: relative;
+  left: 82px;
+  top: 22px;
+  width: 95px;
+  height: 48px;
+}
+
+.country-flag {
+  width: 18px;
+  height: 14px;
+  border: 1px solid #08153e;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-right: 11px;
+}
+
+.down {
+  position: absolute;
+  left: 63px;
+  width: 24px;
+  height: 24px;
+}
+
+.selection {
+  width: 17px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+
+  color: #08153e;
+}
+
 .cloud {
   /* cloud */
   position: absolute;
@@ -173,5 +227,18 @@ export default class Form extends Vue {
   to {
     transform: rotate(360deg);
   }
+}
+</style>
+<style>
+.IZ-select__input.IZ-select__input--focused {
+  border: 1px solid rgba(8, 21, 62, 0.05);
+  border-radius: 6px;
+  outline: none;
+  box-shadow: none;
+}
+
+.IZ-select__input {
+  border: 1px solid rgba(8, 21, 62, 0.05);
+  border-radius: 6px;
 }
 </style>

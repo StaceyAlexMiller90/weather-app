@@ -110,19 +110,23 @@ const actions = {
       const response = await axios.get(
         `https://api.weatherbit.io/v2.0/forecast/daily?city=${location.city}&country=${location.countryCode}&key=${key}&days=10`
       )
-      const tenDayForecast = response.data.data.map((day: any) => {
-        return {
-          date: day.valid_date,
-          minTemp: Math.round(day.min_temp),
-          maxTemp: Math.round(day.max_temp),
-          average: Math.round((day.min_temp + day.max_temp) / 2)
-        }
-      })
-      commit('UPDATE_LOCATION_WEATHER', {
-        city: location.city,
-        countryCode: location.countryCode,
-        tenDayForecast
-      })
+      if (response.data.length === 0) {
+        dispatch('appState/appError', null, { root: true })
+      } else {
+        const tenDayForecast = response.data.data.map((day: any) => {
+          return {
+            date: day.valid_date,
+            minTemp: Math.round(day.min_temp),
+            maxTemp: Math.round(day.max_temp),
+            average: Math.round((day.min_temp + day.max_temp) / 2)
+          }
+        })
+        commit('UPDATE_LOCATION_WEATHER', {
+          city: location.city,
+          countryCode: location.countryCode,
+          tenDayForecast
+        })
+      }
     } catch (e) {
       console.log(e.message)
     }

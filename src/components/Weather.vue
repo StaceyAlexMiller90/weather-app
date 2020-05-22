@@ -4,10 +4,8 @@
     v-bind:class="{ defaultCol: !city }"
     v-bind:style="{ background: city && colForLocation }"
   >
-    <Form
-      class="searchBar"
-      v-bind:class="{ emptyPageSearch: !city, resultsPageSearch: city }"
-    />
+    <p v-if="appStatus === 'error'" class="error-message">No data found, please check inputs</p>
+    <Form class="searchBar" v-bind:class="{ emptyPageSearch: !city, resultsPageSearch: city }" />
     <Results class="results-container" v-if="city" />
   </div>
 </template>
@@ -20,7 +18,7 @@ import { mapState, mapGetters } from 'vuex'
 
 @Component({
   computed: {
-    ...mapState('appState', ['appLoading']),
+    ...mapState('appState', ['appLoading', 'appStatus']),
     ...mapState('locationWeather', ['city', 'countryCode', 'tenDayForecast']),
     ...mapGetters('locationWeather', ['averageTempTenDays', 'colForLocation'])
   },
@@ -34,6 +32,16 @@ export default class Weather extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.error-message {
+  display: flex;
+  justify-content: center;
+  top: 20%;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  color: gray;
+}
+
 .bg {
   /* bg */
   position: absolute;

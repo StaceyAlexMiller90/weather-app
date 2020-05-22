@@ -1,5 +1,6 @@
-export interface LoadingModel {
+export interface appModel {
   appLoading: boolean
+  appStatus: string
 }
 
 export interface LocationWeatherModel {
@@ -15,4 +16,10 @@ export interface LocationWeatherModel {
 
 export interface Colours {
   [key: string]: string
+}
+
+export interface Country {
+  name: string
+  code: string
+  flag: string
 }
