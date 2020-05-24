@@ -32,7 +32,15 @@ npm install
 
 ```
 
-4. Start development server
+4. This project requires a key from the WeatherBit API saved in a .env file
+
+```
+
+VUE_APP_APIKEY
+
+```
+
+5. Start development server
 
 ```
 
@@ -60,5 +68,5 @@ npm run serve
 
 ### Libraries
 
-- vue-cool-select package for dropdown
+- vue-cool-select package for country dropdown
 - moment for date formatting
