@@ -104,31 +104,35 @@ const actions = {
     { dispatch, commit }: any,
     location: { city: string; countryCode: string }
   ) {
-    try {
-      await dispatch('appState/appIsLoading', null, { root: true })
-      // commit('UPDATE_LOCATION', { location })
-      const response = await axios.get(
-        `https://api.weatherbit.io/v2.0/forecast/daily?city=${location.city}&country=${location.countryCode}&key=${key}&days=10`
-      )
-      if (response.data.length === 0) {
-        dispatch('appState/appError', null, { root: true })
-      } else {
-        const tenDayForecast = response.data.data.map((day: any) => {
-          return {
-            date: day.valid_date,
-            minTemp: Math.round(day.min_temp),
-            maxTemp: Math.round(day.max_temp),
-            average: Math.round((day.min_temp + day.max_temp) / 2)
-          }
-        })
-        commit('UPDATE_LOCATION_WEATHER', {
-          city: location.city,
-          countryCode: location.countryCode,
-          tenDayForecast
-        })
+    if (!location.city || !location.countryCode) {
+      dispatch('appState/appError', null, { root: true })
+    } else {
+      try {
+        await dispatch('appState/appIsLoading', null, { root: true })
+        // commit('UPDATE_LOCATION', { location })
+        const response = await axios.get(
+          `https://api.weatherbit.io/v2.0/forecast/daily?city=${location.city}&country=${location.countryCode}&key=${key}&days=10`
+        )
+        if (response.data.length === 0) {
+          dispatch('appState/appError', null, { root: true })
+        } else {
+          const tenDayForecast = response.data.data.map((day: any) => {
+            return {
+              date: day.valid_date,
+              minTemp: Math.round(day.min_temp),
+              maxTemp: Math.round(day.max_temp),
+              average: Math.round((day.min_temp + day.max_temp) / 2)
+            }
+          })
+          commit('UPDATE_LOCATION_WEATHER', {
+            city: location.city,
+            countryCode: location.countryCode,
+            tenDayForecast
+          })
+        }
+      } catch (e) {
+        console.log(e.message)
       }
-    } catch (e) {
-      console.log(e.message)
     }
     await dispatch('appState/appIsDoneLoading', null, { root: true })
   }
