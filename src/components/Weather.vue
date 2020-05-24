@@ -1,12 +1,15 @@
 <template>
   <div
     class="bg"
-    v-bind:class="{ defaultCol: !city }"
-    v-bind:style="{ background: city && colForLocation }"
+    v-bind:class="{ defaultCol: !city || appStatus === 'error' }"
+    v-bind:style="{ background: (city && appStatus === 'ok') ? colForLocation : null}"
   >
     <p v-if="appStatus === 'error'" class="error-message">No data found, please double check input</p>
-    <Form class="searchBar" v-bind:class="{ emptyPageSearch: !city, resultsPageSearch: city }" />
-    <Results class="results-container" v-if="city" />
+    <Form
+      class="searchBar"
+      v-bind:class="{ emptyPageSearch: !city || appStatus === 'error', resultsPageSearch: city && appStatus === 'ok' }"
+    />
+    <Results class="results-container" v-if="city && appStatus === 'ok'" />
   </div>
 </template>
 

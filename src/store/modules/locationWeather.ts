@@ -124,6 +124,7 @@ const actions = {
               average: Math.round((day.min_temp + day.max_temp) / 2)
             }
           })
+          dispatch('appState/appOk', null, { root: true })
           commit('UPDATE_LOCATION_WEATHER', {
             city: location.city,
             countryCode: location.countryCode,

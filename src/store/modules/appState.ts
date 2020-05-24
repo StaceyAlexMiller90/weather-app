@@ -19,13 +19,16 @@ const actions = {
 
   appError({ commit }: any) {
     commit('APP_ERROR')
+  },
+
+  appOk({ commit }: any) {
+    commit('APP_STATUS_OK')
   }
 }
 
 // mutations
 const mutations = {
   APP_LOADING(state: appModel) {
-    state.appStatus = 'ok'
     state.appLoading = true
   },
 
@@ -34,6 +37,9 @@ const mutations = {
   },
   APP_ERROR(state: appModel) {
     state.appStatus = 'error'
+  },
+  APP_STATUS_OK(state: appModel) {
+    state.appStatus = 'ok'
   }
 }
 
